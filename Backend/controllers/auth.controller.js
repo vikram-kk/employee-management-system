@@ -28,12 +28,19 @@ const register = async (req, res) => {
             email
         })
 
-        // const token = jwt.sign({ id: user._id, role: user.role },
-        //     process.env.JWT_SECRET,
-        // { expiresIn: "7d" }
-        // );
+        const token = jwt.sign({ id: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
 
-        res.status(201).json({ message: 'User registered successfully', user })
+        res.status(201).json({
+            message: 'User registered successfully', user: {
+                id: existingUser._id,
+                name: existingUser.name,
+                email: existingUser.email,
+                role: existingUser.role
+            }, token
+        })
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -41,31 +48,50 @@ const register = async (req, res) => {
 
 
 const login = async (req, res) => {
-    const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).json({
-            message: "please enter valid email and password"
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "please enter valid email and password"
+            })
+        }
+
+        const existingUser = await User.findOne({ email });
+        if (!existingUser) {
+            return res.status(400).json({
+                message: "Invalid email or password "
+            })
+        }
+
+        const isMatch = await bycrypt.compare(password, existingUser.password);
+
+
+        if (!isMatch) {
+            return res.status(400).json({
+                message: "Invalid email or password"
+            })
+        }
+        const token = jwt.sign(
+            { id: existingUser._id, role: existingUser.role },
+            process.env.JWT_SECRET,
+            { expiresIn: "7d" }
+        );
+
+        res.status(200).json({
+            message: "Login successful",
+            token,
+            user: {
+                id: existingUser._id,
+                name: existingUser.name,
+                email: existingUser.email,
+                role: existingUser.role
+            }
+        });
+    } catch (error) {
+        res.status(404).json({
+            message: error.message
         })
     }
 
-    const existingUser = await User.findOne({ email });
-    if (!existingUser) {
-        return res.status(400).json({
-            message: "Invalid email or password "
-        })
-    }
-
-    const isMatch = await bycrypt.compare(password, existingUser.password);
-
-    if (!isMatch) {
-        return res.status(400).json({
-            message: "Invalid email or password"
-        })
-    }
-
-    res.json({
-        message: "login successfull",
-        existingUser
-    })
 }
 module.exports = { register, login }
