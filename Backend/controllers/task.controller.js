@@ -3,9 +3,9 @@ const Task = require('../models/Task');
 const createTask = async (req, res) => {
     try {
         const { title, description, assignedTo, dueDate } = req.body;
-        // if (!title) {
-        //     return res.status(400).json({ message: "A task title is mandatory." });
-        // }
+        if (!title) {
+            return res.status(400).json({ message: "A task title is mandatory." });
+        }
 
         const task = await Task.create({
             title,
@@ -43,7 +43,7 @@ const getTasks = async (req, res) => {
 }
 
 
-const UpdateTask = async (req, res) => {
+const UpdateTaskStatus = async (req, res) => {
     try {
         const { status } = req.body;
 
@@ -72,4 +72,4 @@ const UpdateTask = async (req, res) => {
     }
 };
 
-module.exports = { createTask, getTasks, UpdateTask }
+module.exports = { createTask, getTasks, UpdateTaskStatus }

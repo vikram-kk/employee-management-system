@@ -1,29 +1,24 @@
-
-export const getTask = () => {
+export const getTask = async () => {
     try {
-        const fetchTask = async () => {
-            const token = await localStorage.getItem('token');
-            const res = await fetch('http://localhost:5001/tasks', {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            })
-            const data = await data.json()
-            if (!res.ok) {
-                alert(data.message);
-                return [];
+        const token = localStorage.getItem('token');
+        const res = await fetch('http://localhost:5001/tasks', {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
             }
+        });
 
-            return data;
+        const data = await res.json();
 
+        if (!res.ok) {
+            alert(data.message);
+            return [];
         }
 
-        fetchTask()
+        return data;
+
     } catch (error) {
         console.log(error.message);
-
-        return []
+        return [];
     }
-
-}
+};
