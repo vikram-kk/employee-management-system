@@ -27,27 +27,28 @@ export const handleLogin = async (email, password) => {
 
 export const handleSignup = async (email, name, password, role) => {
     try {
+        const token = localStorage.getItem("token");
         const res = await fetch("http://localhost:5001/auth/register", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({ email, name, password, role })
         })
 
-        const data = res.json();
+        const data = await res.json();
         console.log(data);
 
         if (!res.ok) {
             return data.message
         }
 
-        localStorage.setItem(data.token)
-
         alert("Account created successfully")
+        return data
 
     } catch (error) {
-
+        return res.json({ message: error.message })
     }
 
 }
