@@ -18,7 +18,7 @@ export const handleLogin = async (email, password) => {
 
         localStorage.setItem("token", data.token)
         alert("Login successfull")
-        return res
+        return { res, data }
     } catch (error) {
         console.log(error.message);
 

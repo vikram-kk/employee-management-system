@@ -1,11 +1,12 @@
-import { useState } from "react";
 import { createTask } from "../services/taskService";
+import { useState } from "react";
 
 export default function CreatTask() {
   const [form, setForm] = useState({
     title: "",
     description: "",
     assignedTo: "",
+    dueDate: "",
   });
 
   const handleInput = (e) => {
@@ -46,8 +47,14 @@ export default function CreatTask() {
             onChange={(e) => handleInput(e)}
             placeholder="who's task is this for ?"
           />
-          <h1>Created By</h1>
-          {/* <input type="text" /> */}
+          <h1>Due Date</h1>
+          <input
+            name="dueDate"
+            type="date"
+            value={form.dueDate}
+            onChange={(e) => handleInput(e)}
+            placeholder="who's task is this for ?"
+          />
           <button type="submit">submit</button>
         </form>
       </div>

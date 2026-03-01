@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { userContext } from "../context/AuthContext";
 import { handleLogin } from "../services/authServices";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const { login } = useContext(userContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -16,11 +18,11 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await handleLogin(formData.email, formData.password);
-    console.log(response);
-    console.log(response.status);
-
-    if (response && response.status === 200) {
+    const { res, data } = await handleLogin(formData.email, formData.password);
+    console.log(data);
+    console.log(res);
+    login(data.user);
+    if (res && res.status === 200) {
       navigate("/dashboard");
     }
   };

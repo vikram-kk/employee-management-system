@@ -41,6 +41,7 @@ export const createTask = async (formdata) => {
     if (!res.ok) {
         return data.message
     }
+    console.log(data)
 
     return data
 }
