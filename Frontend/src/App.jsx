@@ -10,7 +10,14 @@ export default function App() {
     <>
       <Routes>
         <Route path="/auth/login" element={<Login />} />
-        <Route path="/task/create" element={<CreatTask />} />
+        <Route
+          path="/task/create"
+          element={
+            <Protect>
+              <CreatTask />
+            </Protect>
+          }
+        />
         <Route
           path="/auth/register"
           element={

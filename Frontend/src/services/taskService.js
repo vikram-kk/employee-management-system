@@ -43,5 +43,5 @@ export const createTask = async (formdata) => {
     }
     console.log(data)
 
-    return data
+    return { data, res }
 }
