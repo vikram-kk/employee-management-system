@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import CreatTask from "./pages/CreatTask";
 import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import Dashboard from "./pages/Dashboard";
@@ -9,6 +10,7 @@ export default function App() {
     <>
       <Routes>
         <Route path="/auth/login" element={<Login />} />
+        <Route path="/task/create" element={<CreatTask />} />
         <Route
           path="/auth/register"
           element={

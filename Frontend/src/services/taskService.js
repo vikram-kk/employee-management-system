@@ -22,3 +22,25 @@ export const getTask = async () => {
         return [];
     }
 };
+
+export const createTask = async (formdata) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        return { success: false }
+    }
+    const res = await fetch("http://localhost:5001/tasks/create", {
+        method: "POST",
+        body: JSON.stringify(formdata),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        }
+    })
+
+    const data = await res.json();
+    if (!res.ok) {
+        return data.message
+    }
+
+    return data
+}
