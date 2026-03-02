@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { handleSignup } from "../services/authServices";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { userContext } from "../context/AuthContext";
+import Navbar from "../components/Navbar";
 
 const inputs = [
   {
@@ -45,36 +48,82 @@ export default function CreateUser() {
     );
     console.log(data);
   };
+  const { loading } = useContext(userContext);
+  if (loading) {
+    return <h2 className="flex-center text-2xl h-screen">Loading...</h2>;
+  }
   return (
     <>
-      <div className="bg-[#0F172A] text-white h-screen w-full col-center ">
-        <div className="  p-8 rounded py-10 bg-3d-white">
-          <h1 className="text-3xl text-center font-bold mb-4">Create User</h1>
-          <form onSubmit={handleCreate}>
-            {inputs.map((input, index) => (
-              <div
-                className="flex gap-4 justify-between items-center"
-                key={index}
-              >
-                <div>
-                  <h2 className="capitalize text-xl">{input.name}</h2>
-                </div>
-                <div>
-                  <input
-                    className="bg-gray-400 text-black p-2 m-0.5 rounded focus:outline-none"
-                    type={input.type}
-                    placeholder={`Enter ${input.name}`}
-                    name={input.name}
-                    onChange={handleform}
-                  />
-                </div>
-              </div>
-            ))}
+      <div className="flex h-screen bg-gray-50">
+        {/* Sidebar */}
+        <aside className="w-64 bg-white shadow-lg p-6 hidden md:block">
+          <h2 className="text-2xl font-bold text-blue-600 mb-8">EMS</h2>
+          <nav className="space-y-4 text-gray-700 flex flex-col ">
+            <Link to="/dashboard">
+              <p className="hover:text-blue-600 cursor-pointer font-medium">
+                Dashboard
+              </p>
+            </Link>
+            <Link>
+              <p className="hover:text-blue-600 cursor-pointer">My Tasks</p>
+            </Link>
+            <Link to="/auth/register">
+              <p className="hover:text-blue-600 cursor-pointer">Create User</p>
+            </Link>
+            <Link to="/task/create">
+              <p className="hover:text-blue-600 cursor-pointer">Assign Task</p>
+            </Link>
+            <Link to="">
+              <p className="hover:text-blue-600 cursor-pointer">Settings</p>
+            </Link>
+          </nav>
+        </aside>
 
-            <button className="bg-3d px-4 py-1 rounded bg-[#3B82F6] mt-4 w-full hover:bg-[#153e80]">
-              Create Acc
-            </button>
-          </form>
+        {/* Main Area */}
+        <div className="flex-1 flex flex-col">
+          {/* Navbar */}
+          <Navbar />
+
+          {/* Content */}
+          <main className=" overflow-y-auto">
+            <div className="h-167 w-full col-center ">
+              <div className=" rounded w-full col-center">
+                <h1 className="text-3xl text-center text-black font-bold mb-4">
+                  Create User
+                </h1>
+                <form
+                  onSubmit={handleCreate}
+                  className="shadow-2xl p-8 w-1/2 rounded"
+                >
+                  {inputs.map((input, index) => (
+                    <div
+                      className="flex gap-4 justify-between items-center"
+                      key={index}
+                    >
+                      <div>
+                        <h2 className="capitalize text-xl text-black">
+                          {input.name}:
+                        </h2>
+                      </div>
+                      <div>
+                        <input
+                          className="bg-gray-400 text-black p-2 m-0.5 rounded focus:outline-none"
+                          type={input.type}
+                          placeholder={`Enter ${input.name}`}
+                          name={input.name}
+                          onChange={handleform}
+                        />
+                      </div>
+                    </div>
+                  ))}
+
+                  <button className="bg-3d px-4 py-1 rounded bg-[#3B82F6] mt-4 w-full hover:bg-[#153e80]">
+                    Create Acc
+                  </button>
+                </form>
+              </div>
+            </div>
+          </main>
         </div>
       </div>
     </>

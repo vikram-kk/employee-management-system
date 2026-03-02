@@ -1,10 +1,11 @@
 const jwt = require('jsonwebtoken')
 
+
 const protect = async (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            res.status(401).json({
+            return res.status(401).json({
                 message: "Not Authorized, no token"
             })
         }
@@ -22,4 +23,4 @@ const protect = async (req, res, next) => {
     }
 }
 
-module.exports = protect
+module.exports = { protect }

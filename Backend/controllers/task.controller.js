@@ -30,13 +30,24 @@ const createTask = async (req, res) => {
 const getTasks = async (req, res) => {
     try {
         let tasks;
+        let taskcount;
+        let pending;
+        let completed;
         if (req.user.role === "admin") {
             tasks = await Task.find().populate("assignedTo", "name email")
+            taskcount = await Task.countDocuments()
+            pending = await Task.countDocuments({ status: "pending" })
+            completed = await Task.countDocuments({ Status: "completed" })
         } else {
             tasks = await Task.find({ assignedTo: req.user.id })
         }
 
-        res.json(tasks)
+        res.json({
+            tasks,
+            totaltasks: taskcount,
+            pendingtasks: pending,
+            completedtask: completed
+        })
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

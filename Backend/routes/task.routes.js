@@ -1,5 +1,5 @@
 const express = require("express")
-const protect = require('../middlewares/auth.middleware')
+const { protect } = require('../middlewares/auth.middleware')
 const authRole = require('../middlewares/role.middleware')
 const { createTask, getTasks } = require('../controllers/task.controller')
 const router = express.Router();

@@ -29,12 +29,8 @@ const register = async (req, res) => {
         })
 
         res.status(201).json({
-            message: 'User registered successfully', user: {
-                id: existingUser._id,
-                name: existingUser.name,
-                email: existingUser.email,
-                role: existingUser.role
-            }
+            message: 'User registered successfully',
+            user: { id: user._id, name: user.name, email: user.email, role: user.role }
         })
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -89,4 +85,39 @@ const login = async (req, res) => {
     }
 
 }
-module.exports = { register, login }
+
+
+const myinfo = async (req, res) => {
+    try {
+
+        const user = await User.findById(req.user.id).select("-password");
+
+        if (!user) return res.status(404).json({ message: "User not found" });
+
+        res.status(200).json({ message: "User found", user });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+// const myinfo = async (req, res) => {
+//     try {
+//         const authHeader = req.headers.authorization;
+//         if (!authHeader || !authHeader.startsWith("Bearer ")) {
+//             res.status(401).json({
+//                 message: "Not Authorized, no token"
+//             })
+//         }
+//         const token = authHeader.split(" ")[1];
+//         const decoded = jwt.verify(token, process.env.JWT_SECRET)
+//         const user = await User.findById(decoded.id)
+//         return res.status(200).json({
+//             message: "user found",
+//             user
+//         })
+//     } catch (error) {
+//         return res.status(401).json({ message: "Not Authorized, no token" })
+//     }
+// }
+
+
+module.exports = { register, login, myinfo }
