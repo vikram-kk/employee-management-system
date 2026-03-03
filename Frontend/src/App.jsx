@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import CreateUser from "./pages/CreateUser";
 import Dashboard from "./pages/Dashboard";
 import Protect from "./pages/Protect";
+import Roleprotect from "./pages/Roleprotect";
 
 export default function App() {
   return (
@@ -14,7 +15,9 @@ export default function App() {
           path="/task/create"
           element={
             <Protect>
-              <CreatTask />
+              <Roleprotect allowedrole="admin">
+                <CreatTask />
+              </Roleprotect>
             </Protect>
           }
         />
@@ -22,7 +25,9 @@ export default function App() {
           path="/auth/register"
           element={
             <Protect>
-              <CreateUser />
+              <Roleprotect allowedrole="admin">
+                <CreateUser />
+              </Roleprotect>
             </Protect>
           }
         />
