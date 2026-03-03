@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { userContext } from "../context/AuthContext";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 const Roleprotect = ({ children, allowedrole }) => {
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
   const { user } = useContext(userContext);
   if (user && user.role === allowedrole) {
     return children;
