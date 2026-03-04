@@ -8,10 +8,12 @@ export default function TaskList() {
   const [totaltask, setTotaltask] = useState();
   const [pending, setPending] = useState();
   const [completed, setCompleted] = useState();
+  const [loading, setLoading] = useState(false);
   const handleStatus = async (e) => {
     const { value } = e.target;
     console.log(value);
     const data = await updateStatus(value);
+    setLoading(!loading);
     alert(data.message);
   };
   useEffect(() => {
@@ -23,9 +25,10 @@ export default function TaskList() {
       setTotaltask(task.totaltasks);
       setPending(task.pendingtasks);
       setCompleted(task.completedtask);
+      console.log("again render");
     };
     fetchTask();
-  }, []);
+  }, [loading]);
 
   return (
     <>
