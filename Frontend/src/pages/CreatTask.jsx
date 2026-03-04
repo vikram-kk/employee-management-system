@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { createTask } from "../services/taskService";
-import { useContext } from "react";
-import { userContext } from "../context/AuthContext";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+
+import { useState, useEffect } from "react";
+
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
@@ -15,7 +14,31 @@ export default function CreatTask() {
     assignedTo: "",
     dueDate: "",
   });
+  const [userList, setUserList] = useState();
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchuserlist = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch("http://localhost:5001/staff/all/list", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+        console.log(data);
+
+        setUserList(data.staffList);
+      } catch (error) {
+        console.error("Failed to fetch users", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchuserlist();
+  }, []);
   const handleInput = (e) => {
     const { value, name } = e.target;
     setForm({ ...form, [name]: value });
@@ -31,11 +54,11 @@ export default function CreatTask() {
       return data.message;
     }
   };
-  const { loading } = useContext(userContext);
   if (loading) {
-    return <h2 className="flex-center text-2xl h-screen">Loading...</h2>;
+    return (
+      <h2 className="font-bold text-2xl flex-center h-screen">Loading...</h2>
+    );
   }
-
   return (
     <>
       <div className="flex h-screen bg-gray-50">
@@ -71,14 +94,19 @@ export default function CreatTask() {
                     <h1 className="text-xl capitalize font-semibold">
                       Assigned to:
                     </h1>
-                    <input
+                    <select
                       name="assignedTo"
-                      className="text-lg p-0.5"
-                      type="text"
+                      className="border px-6 p-2 rounded focus:none overflow-x-scroll"
                       value={form.assignedTo}
-                      onChange={(e) => handleInput(e)}
-                      placeholder="who's task is this for ?"
-                    />
+                      onChange={handleInput}
+                    >
+                      <option value="">Select a user</option>
+                      {userList.map((user, i) => (
+                        <option key={user._id || i} value={user._id}>
+                          {user.name}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
                 <div className="flex justify-between">

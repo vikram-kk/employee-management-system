@@ -13,9 +13,6 @@ export default function Sidebar() {
             Dashboard
           </p>
         </Link>
-        <Link>
-          <p className="hover:text-blue-600 cursor-pointer">My Tasks</p>
-        </Link>
         {user && user.role == "admin" ? (
           <Link to="/auth/register">
             <p className="hover:text-blue-600 cursor-pointer">Create User</p>

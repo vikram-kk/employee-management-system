@@ -1,14 +1,23 @@
 import { useState, useEffect } from "react";
-import { getTask } from "../services/taskService";
+import { getTask, updateStatus } from "../services/taskService";
+import { useNavigate } from "react-router-dom";
 
 export default function TaskList() {
+  const navigate = useNavigate();
   const [task, setTask] = useState([]);
   const [totaltask, setTotaltask] = useState();
   const [pending, setPending] = useState();
   const [completed, setCompleted] = useState();
+  const handleStatus = async (e) => {
+    const { value } = e.target;
+    console.log(value);
+    const data = await updateStatus(value);
+    alert(data.message);
+  };
   useEffect(() => {
     const fetchTask = async () => {
       const task = await getTask();
+      console.log(task.tasks);
       setTask(task.tasks);
 
       setTotaltask(task.totaltasks);
@@ -49,9 +58,20 @@ export default function TaskList() {
                 <p className="text-xs text-gray-400 mt-2">{item.dueDate}</p>
               </div>
 
-              <span className="px-3 py-1 text-sm rounded-full bg-yellow-100 text-yellow-600">
-                {item.status}
-              </span>
+              <div>
+                {" "}
+                Status:
+                <span className="px-3 py-1 text-sm rounded-full bg-yellow-100 text-yellow-600">
+                  {item.status}
+                </span>
+                <button
+                  value={item._id}
+                  onClick={(e) => handleStatus(e)}
+                  className="py-2 block w-full capitalize text-center text-sm rounded bg-green-100 transition-colors duration-300 ease-in-out text-green-600 mt-2 hover:bg-green-800 hover:text-white"
+                >
+                  complete
+                </button>
+              </div>
             </div>
           </div>
         ))}
