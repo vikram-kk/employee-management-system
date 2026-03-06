@@ -67,7 +67,7 @@ export default function CreatTask() {
         {/* Main Area */}
         <div className="flex-1 flex flex-col">
           {/* Navbar */}
-          <Navbar />
+          <Navbar name="Assign Task" />
 
           {/* Content */}
           <main className=" overflow-y-auto">

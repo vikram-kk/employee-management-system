@@ -19,7 +19,7 @@ export default function Dashboard() {
       {/* Main Area */}
       <div className="flex-1 flex flex-col">
         {/* Navbar */}
-        <Navbar />
+        <Navbar name="Dashboard" />
 
         {/* Content */}
         <main className="p-6 overflow-y-auto">

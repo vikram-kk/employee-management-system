@@ -62,7 +62,7 @@ export default function CreateUser() {
         {/* Main Area */}
         <div className="flex-1 flex flex-col">
           {/* Navbar */}
-          <Navbar />
+          <Navbar name="Create User" />
 
           {/* Content */}
           <main className=" overflow-y-auto">

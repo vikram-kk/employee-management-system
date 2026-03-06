@@ -60,17 +60,20 @@ export default function TaskList() {
                 <p className="text-gray-500 text-sm">{item.description}</p>
                 <p className="text-xs text-gray-400 mt-2">{item.dueDate}</p>
               </div>
-
               <div>
-                {" "}
-                Status:
-                <span className="px-3 py-1 text-sm rounded-full bg-yellow-100 text-yellow-600">
-                  {item.status}
-                </span>
+                <div className="flex gap-2">
+                  {" "}
+                  Status:
+                  <div
+                    className={`px-3 py-1 w-23 text-center text-sm rounded-full ${item.status == "completed" ? "bg-green-100 text-green-600" : "bg-yellow-100 text-yellow-600"}`}
+                  >
+                    {item.status}
+                  </div>
+                </div>
                 <button
                   value={item._id}
                   onClick={(e) => handleStatus(e)}
-                  className="py-2 block w-full capitalize text-center text-sm rounded bg-green-100 transition-colors duration-300 ease-in-out text-green-600 mt-2 hover:bg-green-800 hover:text-white"
+                  className={`${item.status == "completed" ? "hidden" : "inline"} py-2 block w-full capitalize text-center text-sm rounded bg-green-100 transition-colors duration-300 ease-in-out text-green-600 mt-2 hover:bg-green-800 hover:text-white`}
                 >
                   complete
                 </button>

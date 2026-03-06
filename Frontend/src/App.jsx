@@ -5,6 +5,7 @@ import CreateUser from "./pages/CreateUser";
 import Dashboard from "./pages/Dashboard";
 import Protect from "./pages/Protect";
 import Roleprotect from "./pages/Roleprotect";
+import Settings from "./pages/Settings";
 
 export default function App() {
   return (
@@ -18,6 +19,14 @@ export default function App() {
               <Roleprotect allowedrole="admin">
                 <CreatTask />
               </Roleprotect>
+            </Protect>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <Protect>
+              <Settings />
             </Protect>
           }
         />
