@@ -19,10 +19,12 @@ export default function Settings({ children }) {
     {
       name: "Leaves",
       icname: "",
+      path: "leave",
     },
     {
       name: "Block",
       icname: "",
+      path: "block",
     },
   ];
   return (
@@ -34,16 +36,18 @@ export default function Settings({ children }) {
           <div>
             <div className="p-2 flex flex-col gap-4 ">
               {setitems.map((items, i) => (
-                <NavLink to="">
-                  <div
-                    key={i}
-                    className="font-semibold bg-gray-50 py-4 rounded-2xl shadow-sm pl-4 hover:bg-blue-100 hover:text-blue-600"
-                  >
-                    <div key={i} className="flex gap-2">
-                      <SquareUserRound />
-                      <h1>{items.name}</h1>
+                <NavLink to={`/settings/${items.path}`}>
+                  {({ isActive }) => (
+                    <div
+                      key={i}
+                      className={`font-semibold bg-gray-50 py-4 rounded-2xl shadow-sm pl-4 hover:bg-blue-100 hover:text-blue-600 ${isActive ? "bg-blue-100 text-blue-600" : ""}`}
+                    >
+                      <div key={i} className="flex gap-2">
+                        <SquareUserRound />
+                        <h1>{items.name}</h1>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </NavLink>
               ))}
             </div>
