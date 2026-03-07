@@ -6,6 +6,8 @@ import Dashboard from "./pages/Dashboard";
 import Protect from "./pages/Protect";
 import Roleprotect from "./pages/Roleprotect";
 import Settings from "./pages/Settings";
+import Profile from "./components/Profile";
+import UsersList from "./components/UsersList";
 
 export default function App() {
   return (
@@ -29,7 +31,10 @@ export default function App() {
               <Settings />
             </Protect>
           }
-        />
+        >
+          <Route path="profile" element={<Profile />} />
+          <Route path="users" element={<UsersList />} />
+        </Route>
         <Route
           path="/auth/register"
           element={
