@@ -3,6 +3,8 @@ const User = require('../models/user')
 const router = express.Router()
 const { protect } = require('../middlewares/auth.middleware')
 const authRole = require('../middlewares/role.middleware')
+const { upload } = require('../config/upload')
+const { updateProfile } = require('../controllers/user.profile')
 
 router.get('/all/list', protect, authRole("admin"), async (req, res) => {
     try {
@@ -17,5 +19,7 @@ router.get('/all/list', protect, authRole("admin"), async (req, res) => {
         })
     }
 })
+
+router.put("/profile/upload", protect, upload.single("image"), updateProfile)
 
 module.exports = router
