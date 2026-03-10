@@ -1,4 +1,6 @@
-export const updateProfile = async (req, res) => {
+const User = require('../models/user')
+
+const updateProfile = async (req, res) => {
 
     try {
         const user = await User.findById(req.user.id).select("-password")
@@ -12,7 +14,7 @@ export const updateProfile = async (req, res) => {
                 message: "image not found"
             })
         }
-        user.profileImage = req.file.path
+        user.profileImage = req.file.filename
         await user.save()
         res.status(200).json({
             message: "profile pic updated successfully"
@@ -23,3 +25,5 @@ export const updateProfile = async (req, res) => {
         })
     }
 }
+
+module.exports = { updateProfile }

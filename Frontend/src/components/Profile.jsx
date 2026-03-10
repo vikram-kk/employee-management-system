@@ -1,5 +1,20 @@
+import { useState } from "react";
+import { setProfilePic } from "../services/userService";
+
 export default function Profile() {
-  console.log("profile page");
+  const [image, setImage] = useState(null);
+
+  const handleFileChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const handleSubmit = () => {
+    const formdata = new FormData();
+    console.log(formdata);
+    formdata.append("image", image);
+    setProfilePic(formdata);
+  };
+
   return (
     <div>
       <div className="grid grid-cols-4">
@@ -9,6 +24,16 @@ export default function Profile() {
             className="w-full absolute transform translate-y-8"
             alt="profile_img"
           />
+        </div>
+        <div>
+          <input
+            type="file"
+            placeholder="import image"
+            onChange={handleFileChange}
+          />
+          <button type="submit" onClick={handleSubmit}>
+            submit
+          </button>
         </div>
         <div className="col-span-3 bg-gray-50 shadow-lg py-6 px-4 rounded">
           <h1 className="text-3xl font-bold">Vikram Thakur</h1>
