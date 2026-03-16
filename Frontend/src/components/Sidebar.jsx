@@ -23,12 +23,6 @@ export default function Sidebar() {
             <p className="hover:text-blue-600 cursor-pointer">Assign Task</p>
           </Link>
         ) : null}
-        <Link to="">
-          <p className="hover:text-blue-600 cursor-pointer">Leave</p>
-        </Link>
-        <Link to="/settings">
-          <p className="hover:text-blue-600 cursor-pointer">Settings</p>
-        </Link>
       </nav>
     </aside>
   );

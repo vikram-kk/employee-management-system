@@ -24,7 +24,7 @@ export default function App() {
             </Protect>
           }
         />
-        <Route
+        {/* <Route
           path="/settings"
           element={
             <Protect>
@@ -34,7 +34,7 @@ export default function App() {
         >
           <Route path="profile" element={<Profile />} />
           <Route path="users" element={<UsersList />} />
-        </Route>
+        </Route> */}
         <Route
           path="/auth/register"
           element={
