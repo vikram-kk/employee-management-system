@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { getTask, updateStatus } from "../services/taskService";
-import { useNavigate } from "react-router-dom";
 
 export default function TaskList() {
-  const navigate = useNavigate();
   const [task, setTask] = useState([]);
   const [totaltask, setTotaltask] = useState();
   const [pending, setPending] = useState();
@@ -11,7 +9,6 @@ export default function TaskList() {
   const [loading, setLoading] = useState(false);
   const handleStatus = async (e) => {
     const { value } = e.target;
-    console.log(value);
     const data = await updateStatus(value);
     setLoading(!loading);
     alert(data.message);
@@ -19,13 +16,11 @@ export default function TaskList() {
   useEffect(() => {
     const fetchTask = async () => {
       const task = await getTask();
-      console.log(task.tasks);
       setTask(task.tasks);
 
       setTotaltask(task.totaltasks);
       setPending(task.pendingtasks);
       setCompleted(task.completedtask);
-      console.log("again render");
     };
     fetchTask();
   }, [loading]);

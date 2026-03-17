@@ -42,7 +42,7 @@ export const createTask = async (formdata) => {
     if (!res.ok) {
         return data.message
     }
-    console.log(data)
+
 
     return { data, res }
 }
@@ -61,7 +61,6 @@ export const updateStatus = async (value) => {
             body: JSON.stringify(bodydata)
         })
         const data = await res.json()
-        console.log(data)
         return data
     } catch (error) {
         alert(error.message)

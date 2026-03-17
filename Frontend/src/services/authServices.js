@@ -38,7 +38,6 @@ export const handleSignup = async (email, name, password, role) => {
         })
 
         const data = await res.json();
-        console.log(data);
 
         if (!res.ok) {
             return data.message

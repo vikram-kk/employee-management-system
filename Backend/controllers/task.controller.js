@@ -41,6 +41,9 @@ const getTasks = async (req, res) => {
 
         } else {
             tasks = await Task.find({ assignedTo: req.user.id })
+            taskcount = await Task.countDocuments({ assignedTo: req.user.id })
+            pending = await Task.countDocuments({ assignedTo: req.user.id, status: "pending" })
+            completed = await Task.countDocuments({ assignedTo: req.user.id, status: "completed" })
         }
 
         res.json({

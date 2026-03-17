@@ -28,11 +28,10 @@ export default function CreatTask() {
           },
         });
         const data = await res.json();
-        console.log(data);
 
         setUserList(data.staffList);
       } catch (error) {
-        console.error("Failed to fetch users", error);
+        alert("error ");
       } finally {
         setLoading(false);
       }
@@ -47,8 +46,7 @@ export default function CreatTask() {
     e.preventDefault();
 
     const { data, res } = await createTask(form);
-    console.log(data);
-    console.log(res);
+
     if (res && res.status === 201) {
       navigate("/dashboard");
       return data.message;

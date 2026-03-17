@@ -20,8 +20,6 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { res, data } = await handleLogin(formData.email, formData.password);
-    console.log(data);
-    console.log(res);
     login(data.user);
     if (res && res.status === 200) {
       navigate("/dashboard");

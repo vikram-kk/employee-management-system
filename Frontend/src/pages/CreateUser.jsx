@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { handleSignup } from "../services/authServices";
-import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { userContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 
@@ -39,15 +39,15 @@ export default function CreateUser() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleCreate = () => {
+  const handleCreate = async () => {
     event.preventDefault();
-    const data = handleSignup(
+    const data = await handleSignup(
       formData.email,
       formData.name,
       formData.password,
       formData.role,
     );
-    console.log(data);
+    navigate("/dashboard");
   };
   const { loading } = useContext(userContext);
   if (loading) {

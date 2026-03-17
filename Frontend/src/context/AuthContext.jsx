@@ -35,7 +35,6 @@ export const UserProvider = ({ children }) => {
 
   const login = (user) => {
     setUser(user);
-    console.log(user);
   };
   const logout = () => {
     localStorage.removeItem("token");
